@@ -1,0 +1,80 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+List<int> numbers = new List<int>();
+Console.WriteLine("Виберіть режим заповнення списку:" +
+                      "\n1. Вручну" +
+                      "\n2. Випадковими числами автоматично");
+
+int choice = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введіть кількість чисел: ");
+int n = Convert.ToInt32(Console.ReadLine());
+
+switch (choice)
+{
+    case 1: // Заповнення вручну
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write("Введіть елемент " + (i + 1) + ": ");
+            numbers.Add(Convert.ToInt32(Console.ReadLine()));
+        }
+        break;
+
+    case 2 : // Заповнення випадковими числами
+        Random rand = new Random();
+        for (int i = 0; i < n; i++)
+        {
+            numbers.Add(rand.Next(-100, 100));
+        }
+        Console.WriteLine(" ");
+        break;
+}
+
+Console.WriteLine("список:");
+foreach (var num in numbers)
+{
+    Console.Write(num + " ");
+}
+Console.WriteLine(" ");
+
+// Знаходимо мінімальний та максимальний елементи списку
+//int minIndex = numbers.IndexOf(numbers.Min());
+//int maxIndex = numbers.IndexOf(numbers.Max());
+// Поміняємо місцями мінімальний і максимальний елемент
+//int X = numbers[minIndex];
+//numbers[minIndex] = numbers[maxIndex];
+//numbers[maxIndex] = X;
+
+int minIndex = numbers[0];
+int maxIndex = numbers[0];
+foreach(int number in numbers)
+{
+    if (number < minIndex)
+    {
+        minIndex = number;
+    }
+    if (number > maxIndex)
+    {
+        maxIndex = number;
+    }
+}
+for (int i=0; i < numbers.Count; i++)
+{
+    if (numbers[i] == minIndex)
+    {
+        numbers[i] = maxIndex;
+    }
+    else if (numbers[i] == maxIndex)
+    {
+        numbers[i] = minIndex;
+    }
+}
+
+
+Console.WriteLine("Оновлений список:");
+foreach (var number in numbers)
+{
+    Console.Write(number + " ");
+}
+Console.ReadKey();
