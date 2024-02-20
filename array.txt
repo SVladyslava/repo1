@@ -1,1 +1,2 @@
 Weather in Kyiv is snowy
+And cold
