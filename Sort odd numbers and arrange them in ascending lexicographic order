@@ -1,0 +1,18 @@
+List<int> li = new List<int>() { 1,12, 15, 11, 44, 27, 39, 35, 23, 34 };
+var n =((from i in li
+        where i > 0 && i % 2 != 0
+        select i).Select(num=> num.ToString())).OrderBy(x=>x);
+foreach( var i in n)
+{
+    Console.WriteLine(i);
+}
+
+Console.WriteLine("--------");
+var n1 = li.Where(i => i > 0 && i % 2 != 0)
+    .Select(num=> num.ToString())
+    .OrderBy(x => x);
+foreach (var i in n1)
+{
+    Console.WriteLine(i);
+}
+Console.ReadKey();
