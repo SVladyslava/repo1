@@ -1,0 +1,57 @@
+using System;
+using System.Linq;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+
+Dictionary<string, int> di = new Dictionary<string, int>();
+di.Add("Math", 81);
+di.Add("Physics", 83);
+di.Add("Chemistry", 87);
+
+var sorted = from k in di
+           orderby k.Value descending
+           select k;
+foreach (var i in sorted)
+{
+    Console.WriteLine(i);
+}
+string L = JsonConvert.SerializeObject(sorted);
+Console.WriteLine(L);
+Console.WriteLine("--------");
+
+/*
+var SD = di.OrderByDescending(x => x.Value);
+foreach (var i in SD)
+{
+    Console.WriteLine(i.Key + " " + i.Value);
+}
+string S = JsonConvert.SerializeObject(SD);
+Console.WriteLine(S);
+*/
+
+// Запис у файл
+Console.WriteLine("Введіть шлях до файлу для запису " );
+string pathWrite;
+StreamWriter writer;
+while (true)
+{
+    try
+    {
+        pathWrite = Console.ReadLine();
+        writer = new StreamWriter(pathWrite);
+
+        writer.Write(L);
+        Console.WriteLine($" записано у {pathWrite}");
+        writer.Close();
+        break;
+}
+    catch (Exception e)
+    {
+        Console.WriteLine("Помилка запису у файл (" + e.Message + ").");
+        continue;
+    }
+}
+
+Console.ReadKey();
