@@ -1,0 +1,154 @@
+using System;
+namespace laba_2_triangle
+{
+	public class Point
+	{
+        public double X { get; }
+        public double Y { get; }
+
+        public Point(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+        
+        public double Side (Point other)
+        {
+            return Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2));
+        } 
+    }
+}
+using System;
+using System.Text.Json;
+using Newtonsoft.Json;
+
+namespace laba_2_triangle
+{
+	public class Triangle
+	{
+        public Point A { get;  }
+        public Point B { get;  }
+        public Point C { get;  }
+
+        public Triangle(Point a, Point b, Point c)
+        {
+            A = a;
+            B = b;
+            C = c;
+        }
+        public double GetPerimeter()
+        {
+            return A.Side(B) + B.Side(C) + C.Side(A);
+        }
+        public double GetArea()
+        {
+            double p = GetPerimeter() / 2.0;
+            return Math.Sqrt(p * (p - A.Side(B)) * (p - B.Side(C)) * (p - C.Side(A)));
+        }
+        public void GetCentroid()
+        {
+            double x = (A.X + B.X + C.X) / 3.0;
+            double y = (A.Y + B.Y + C.Y) / 3.0;
+            Console.WriteLine($"Loaded Triangle Centroid: ({x}, {y})");
+           
+        }
+       
+        public void TypeTriangle()
+        {
+            if (A.Side(B) == B.Side(C) && C.Side(A) == A.Side(B))
+            {
+                Console.WriteLine("Трикутник рівносторонній");
+            }
+            else if (A.Side(B) == B.Side(C) && B.Side(C) != C.Side(A) ||
+                A.Side(B) == C.Side(A) && C.Side(A) != B.Side(C) ||
+                C.Side(A) == B.Side(C) && B.Side(C) != A.Side(B))
+            {
+                Console.WriteLine("Трикутник рівнобедрений");
+            }
+            else
+            {
+                Console.WriteLine("Трикутник різносторонній");
+            }
+        }
+
+        public void SaveToJson(Triangle triangle, string filePath)
+        {
+            string json = JsonConvert.SerializeObject(triangle);
+            File.WriteAllText(filePath, json);
+            Console.WriteLine($"Saved to {filePath}");
+        }
+
+        public static Triangle LoadFromJSON(string loadedPath)
+        {
+            string json = File.ReadAllText(loadedPath);
+            return JsonConvert.DeserializeObject<Triangle>(json);
+        }
+    }
+}
+using System;
+using System.Text.Json;
+using Newtonsoft.Json;
+
+namespace laba_2_triangle
+{
+	public class Triangle
+	{
+        public Point A { get;  }
+        public Point B { get;  }
+        public Point C { get;  }
+
+        public Triangle(Point a, Point b, Point c)
+        {
+            A = a;
+            B = b;
+            C = c;
+        }
+        public double GetPerimeter()
+        {
+            return A.Side(B) + B.Side(C) + C.Side(A);
+        }
+        public double GetArea()
+        {
+            double p = GetPerimeter() / 2.0;
+            return Math.Sqrt(p * (p - A.Side(B)) * (p - B.Side(C)) * (p - C.Side(A)));
+        }
+        public void GetCentroid()
+        {
+            double x = (A.X + B.X + C.X) / 3.0;
+            double y = (A.Y + B.Y + C.Y) / 3.0;
+            Console.WriteLine($"Loaded Triangle Centroid: ({x}, {y})");
+           
+        }
+       
+        public void TypeTriangle()
+        {
+            if (A.Side(B) == B.Side(C) && C.Side(A) == A.Side(B))
+            {
+                Console.WriteLine("Трикутник рівносторонній");
+            }
+            else if (A.Side(B) == B.Side(C) && B.Side(C) != C.Side(A) ||
+                A.Side(B) == C.Side(A) && C.Side(A) != B.Side(C) ||
+                C.Side(A) == B.Side(C) && B.Side(C) != A.Side(B))
+            {
+                Console.WriteLine("Трикутник рівнобедрений");
+            }
+            else
+            {
+                Console.WriteLine("Трикутник різносторонній");
+            }
+        }
+
+        public void SaveToJson(Triangle triangle, string filePath)
+        {
+            string json = JsonConvert.SerializeObject(triangle);
+            File.WriteAllText(filePath, json);
+            Console.WriteLine($"Saved to {filePath}");
+        }
+
+        public static Triangle LoadFromJSON(string loadedPath)
+        {
+            string json = File.ReadAllText(loadedPath);
+            return JsonConvert.DeserializeObject<Triangle>(json);
+        }
+    }
+}
